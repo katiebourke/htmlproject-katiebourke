@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+    <head>
+      <title>AngularJS</title>
+      <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular.min.js"></script>
+    </head>
+    <body>
+          <h2>AngularJS Sample Application</h2>
+        
+        <!--This div is an angular app and controlled by the specified controller-->
+        <form ng-app = "mainApp" ng-controller = "cloudController">
+            <ul>
+                <!--Repeat through the clouds object, call it a cloud object -->
+                <li ng-repeat = "cloud in clouds">
+                    <!--The label is the product name-->
+                    <label>{{cloud.productName}}
+                        <!--Bind the radio button values to product price and create a clickhandler function-->
+                        <input type = "radio"
+                        ng-model="cloud.productPrice" id="{{cloud.productName}}" name="cloud" value="{{cloud.productPrice}}"
+                        required/>
+                    </label>
+                </li>
+                <button onClick="calculateCost()">Calculate</button>
+                </br>
+                <p id="Subtotal"></p>
+                <p id="Total"></p>
+            </ul>
+        </form>
+        <script>
+            var mainApp = angular.module("mainApp", []);
+            
+            mainApp.controller('cloudController', function($scope){
+                $scope.clouds = [{
+                    productName: "AWS",
+                    productPrice: 100,
+                },
+                {
+                    productName: "Google",
+                    productPrice: 200,
+                }];
+            });
+        </script>
+        
+        <script type="text/javascript" >
+            function calculateCost() {
+                var SubTotal;
+                var Total;
+                if (document.getElementById("AWS").checked == true){
+                    SubTotal = document.getElementById("AWS").value;
+                }
+                else{
+                    SubTotal = document.getElementById("Google").value;
+                }
+                SubTotal = parseInt(SubTotal);
+                document.getElementById("SubTotal").innerHTML = "Subtotal : " + SubTotal;
+                
+                Total = SubTotal + (SubTotal*0.1);
+                document.getElementById("Total").innerHTML = "Total : " + Total;
+            };
+        </script>
+        
+    </body>
+</html>
